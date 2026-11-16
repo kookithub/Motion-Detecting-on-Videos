@@ -1,6 +1,6 @@
 # Motion Detecting on Videos
 
-Four small OpenCV / YOLO scripts that scan **long surveillance-style videos** and report *when something happens*: either any significant motion (classic frame differencing) or the appearance of a **person** (YOLOv8 object detection). Instead of watching hours of footage, you get a list of timestamps (and optionally preview JPEGs) to jump to.
+Four small OpenCV / YOLO scripts that scan **long surveillance-style videos** and report *when something happens*: either any significant motion (classic frame differencing) or the appearance of a **person** (YOLOv8 object detection). Instead of watching hours of footage, you get a list of timestamps (and optionally preview JPEGs) to jump to. The project exists because the author's old CCTV has no motion-detection feature, so these scripts were written to scan its footage.
 
 ![Motion detection overlay](docs/images/motion_overlay.gif)
 
@@ -163,13 +163,13 @@ YOLO weights (`yolov8n.pt`, `yolov8s.pt`) are downloaded automatically by Ultral
 
 ## Project Facts (for resume)
 
-- **Course:** TODO: confirm (no course code or name in the repo name or code)
-- **Solo or team:** TODO: confirm (git history has a single "Add files via upload" commit by the repo owner)
-- **My contributions:** TODO: confirm (single upload commit, 2026-10-17, containing all four scripts)
+- **Course:** none (personal project)
+- **Solo or team:** solo personal project
+- **My contributions:** all four scripts were written by the repo owner
 - **Languages / frameworks / libraries:** Python 3; OpenCV (`cv2`); NumPy; Ultralytics YOLOv8 (PyTorch) with `yolov8n.pt` and `yolov8s.pt` pretrained weights
 - **Size:** 4 Python scripts, 189 lines total (50 / 37 / 51 / 51); 0 classes; 0 tests
 - **Key features:** frame-differencing motion detection with contour-area filtering; on-screen timestamp masking; event cool-down and preview-frame export; YOLOv8 person detection with frame sampling; person appeared/gone state tracking; `HH:MM:SS` timestamp output
 - **Algorithms / design patterns:** absolute frame difference, Gaussian blur, binary threshold, morphological dilation, contour extraction and area filtering; pretrained CNN object detection (YOLOv8, COCO class 0 = person); frame sampling; two-state presence machine; time-based event debouncing
 - **Measurable numbers (measured by me on the public OpenCV clip `vtest.avi`, 768x576, 10 fps, 795 frames, 4-core CPU):** frame-differencing about 440-480 frames/s; YOLOv8n about 48 ms/frame, YOLOv8s about 99 ms/frame on CPU; `motion3.py` produced 26 events; `motion.py` flagged 42/794 frames at the original 6000 px threshold. Parameters in the code: diff threshold 30 / 25, blur 21x21 / 5x5, contour area 6000 px, 1200 changed pixels, `EVENT_GAP` 3 s, YOLO conf 0.3 / 0.4, frame step 1 per second / every 3rd frame. Length, resolution, frame rate and event counts of the author's own footage: TODO: confirm
-- **Hard problems and how they were solved (from the code):** the burned-in camera clock created constant false motion -> its region is zeroed before differencing; small noise and text produced false positives -> Gaussian blur, dilation and a 6000 px contour-area filter; bursts of consecutive detections -> 3 s event gap (`motion3.py`) and a `person_active` flag (`motion4`); slow full-video YOLO inference -> frame sampling (`FRAME_STEP` / `FRAME_SKIP`); TODO: confirm which of these the author considers the hardest
-- **Outcome:** working scripts for locating motion and person appearances in long videos; TODO: confirm real-world use, grade or demo
+- **Hard problems and how they were solved (from the code):** the burned-in camera clock created constant false motion -> its region is zeroed before differencing; small noise and text produced false positives -> Gaussian blur, dilation and a 6000 px contour-area filter; bursts of consecutive detections -> 3 s event gap (`motion3.py`) and a `person_active` flag (`motion4`); slow full-video YOLO inference -> frame sampling (`FRAME_STEP` / `FRAME_SKIP`)
+- **Outcome:** working scripts used on the owner's own CCTV footage to locate motion and person appearances in long videos
